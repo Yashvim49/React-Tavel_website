@@ -1,0 +1,116 @@
+.faq-header {
+    height: 40vh;
+    background-image: url('https://wallpapers.com/images/hd/1366x768-travel-background-1366-x-768-5ck9uave3gfls7bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+.faq-title {
+  position: relative;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 4%;
+  margin-top: 3%;
+}
+
+.faq-title::after {
+  content: '';
+  position: absolute;
+  width: 60px;
+  height: 4px;
+  background-color: #3498db;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -10px;
+  border-radius: 2px;
+}
+
+
+.faq-title {
+  margin-bottom: 30px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.faq-main-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 40px 10%;
+    gap: 40px;
+    box-sizing: border-box;
+    background-image: url('https://document360.com/wp-content/uploads/2021/12/top_faq_software_comparison.png');
+}
+
+.faq-container {
+    flex: 1;
+    font-family: Arial, sans-serif;
+}
+
+.faq-item {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.faq-question {
+    font-weight: bold;
+    font-size: 18px;
+    transition: color 0.3s ease;
+}
+
+.faq-question:hover {
+    color: #007bff;
+}
+
+.faq-answer {
+    margin-top: 10px;
+    color: #555;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.faq-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.faq-image img {
+    max-width: 90%;
+    height: auto;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+/* Make responsive */
+@media (max-width: 768px) {
+    .faq-main-wrapper {
+        flex-direction: column;
+    }
+
+    .faq-image {
+        margin-top: 20px;
+    }
+
+    .faq-title::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .faq-title {
+        text-align: center;
+    }
+}

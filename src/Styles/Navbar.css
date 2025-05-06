@@ -1,0 +1,51 @@
+/* Navbar background and hover effect */
+.navbar {
+    background-color: #ffffff !important;
+    position: sticky;
+  }
+  .main-title {
+    font-family: 'Poppins', 'Segoe UI', sans-serif; /* Clean and modern font */
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #000; /* Black color */
+    letter-spacing: 1px;
+    text-transform: uppercase; /* Optional: for bold branding */
+  }
+
+  .logo-img {
+    height: 80px;     
+    
+  } 
+  
+  
+  
+  .nav-link {
+    color: #000000 !important; 
+    transition: color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .nav-link:hover {
+    color: #afafac !important;
+    transform: scale(1.05);
+  }
+  
+  .nav-item i {
+    margin-right: 8px;
+    font-size: 1.3rem; 
+  }
+  
+  .navbar-toggler-icon {
+    background-color: #ffffff;
+  }
+
+  
+  .navbar-brand i {
+    font-size: 2rem; 
+    margin-right: 10px;
+  }
+  
+  .nav-link.active {
+    font-weight: bold;
+    color: #14201eb4 !important;
+    border-bottom: 2px solid #11aa89;
+}

@@ -1,0 +1,49 @@
+.service-card {
+    transition: transform 0.3s ease;
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+  .service-card:hover {
+    transform: translateY(-10px);
+  }
+ 
+  .card-img-top {
+    height: 80px;
+    object-fit: contain;
+  }
+
+  .service-header {
+    height: 40vh; 
+    background-image: url('https://travelb.in/wp-content/uploads/2024/01/%E2%80%94Pngtree%E2%80%94summer-ocean-beach-travel-poster_1113389-1-1920x600.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+   
+  }
+  
+  .services-title {
+    position: relative;
+    font-size: 2.5rem;  
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 3%;
+    margin-top: 3%;
+  }
+  
+  .services-title::after {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 4px;
+    background-color: #3498db;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -10px;
+    border-radius: 2px;
+  }
+ 
