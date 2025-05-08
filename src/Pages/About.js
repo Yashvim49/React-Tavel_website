@@ -22,8 +22,8 @@ const About = () => {
             <div className="about-main-wrapper">
                 <div className="about-history">
                     <div className="about-text">
-                        <p>
                             <h2 className="text about-h-title">Short History</h2>
+                        <p>
 
                             <strong>WanderWise</strong> was founded in 2010 in India with a passion for helping people explore hidden gems across the country.
                             Starting with curated local experiences, we soon expanded to offer <strong>flights, hotels</strong>, and all-inclusive travel packages.
@@ -51,19 +51,19 @@ const About = () => {
                 </p>
                 <div className="best-cards-container">
                     <div className="best-card">
-                        <h4><i class="fa-solid fa-clock-rotate-left"></i> 10+ Years of Experience</h4>
+                        <h4><i className="fa-solid fa-clock-rotate-left"></i> 10+ Years of Experience</h4>
                         <p>We’ve helped thousands of travelers explore over 50 countries across the globe.</p>
                     </div>
                     <div className="best-card">
-                        <h4><i class="fa-solid fa-users"></i> 95% Customer Satisfaction</h4>
+                        <h4><i className="fa-solid fa-users"></i> 95% Customer Satisfaction</h4>
                         <p>Our reviews speak for themselves — happy clients, unforgettable memories.</p>
                     </div>
                     <div className="best-card">
-                        <h4><i class="fa-solid fa-award"></i> Award-Winning Travel Services</h4>
+                        <h4><i className="fa-solid fa-award"></i> Award-Winning Travel Services</h4>
                         <p>Recognized for excellence in travel planning and personalized itineraries.</p>
                     </div>
                     <div className="best-card">
-                        <h4><i class="fa-solid fa-globe"></i> Global Network of Experts</h4>
+                        <h4><i className="fa-solid fa-globe"></i> Global Network of Experts</h4>
                         <p>Local partnerships in every region to ensure you always feel at home.</p>
                     </div>
                 </div>
