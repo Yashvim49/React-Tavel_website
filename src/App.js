@@ -8,6 +8,7 @@ import Faq from './Pages/Faq';
 import Footer from './components/Footer';
 import About from './Pages/About';
 import Dashboard from './Admin/Pages/Dashboard';
+import Adminservices from './Admin/Pages/Services';
 
 function AppContent() {
   const location = useLocation();
@@ -24,6 +25,7 @@ function AppContent() {
         <Route path='/about' element={<About />} />
         <Route path='/faq' element={<Faq />} />
         <Route path='/admin' element={<Dashboard />} />
+        <Route path='/admin/service' element={<Adminservices />} />
       </Routes>
 
       {!isAdminRoute && <Footer />}

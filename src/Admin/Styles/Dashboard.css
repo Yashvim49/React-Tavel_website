@@ -222,6 +222,7 @@
   text-align: center;  
   height: 22px;
   box-shadow: 0 2px 4px rgba(73, 72, 72, 0.4); 
+  padding-top: 1px;
 }
 
 .title1{
@@ -284,4 +285,12 @@
 .card,
 .card * {
   transition: all 0.3s ease;
+}
+
+.card {
+  margin-bottom: 1rem; /* or 16px */
+}
+
+.last_card{
+  background-color: #a0a1a14b;
 }

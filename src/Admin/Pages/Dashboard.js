@@ -6,7 +6,7 @@ import SemiCircularChart from '../Dashboard_Item/Guageroundchart'
 import Dashboardcard from '../Dashboard_Item/Dashboardcard'
 import Navbar from '../Components/Navbar'
 const Dashboard = () => {
-    
+
   return (
     <>
       <div className="dashboard-layout">
@@ -14,8 +14,8 @@ const Dashboard = () => {
         <Sidebar />
         <div className="dashboard-content">
           {/* import navbar here */}
-         <Navbar/>
-
+          <Navbar />
+          
           {/* Chart 1 come from newscustomer chart from dashboard item*/}
           <div className="chart-section">
             <div className="chart-card">
@@ -44,7 +44,7 @@ const Dashboard = () => {
 
           {/* //card come from dashbord_item in dashboardcard*/}
           <div className="card-layout">
-          <Dashboardcard/>
+            <Dashboardcard />
           </div>
 
         </div>

@@ -19,13 +19,9 @@ const SemiCircularChart = ({ percentage, label }) => {
       },
       options: {
         responsive: true,
-        maintainAspectRatio: false,
         circumference: 180,
         rotation: -90,
-        plugins: {
-          legend: { display: false },
-          tooltip: { enabled: false },
-        }
+       
       }
     });
   }, [percentage]); // Depend on percentage to update chart

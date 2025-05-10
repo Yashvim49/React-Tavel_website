@@ -30,7 +30,7 @@ const Home = () => {
       </div>
       {/* service */}
       <div className="container">
-        <h2 className="text-center services-title">Services</h2>
+        <h2 className="text-center services-title">Top Services</h2>
         <div className="row g-4">
           {Items.map((item) => (
             <div className="col-md-3" >

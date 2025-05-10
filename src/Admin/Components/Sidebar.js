@@ -18,6 +18,7 @@ const Sidebar = () => {
       {/* Navigation */}
       <div className="sidebar-section">
         <Link to="/admin"><i className="fa-solid fa-gauge"></i> Dashboard</Link>
+        <Link to="/admin/service"><i className="fas fa-handshake"></i> Services</Link>
         <Link to="# " className="task-link">
           <i className="fa-solid fa-briefcase"></i>
           <span className="link-label">Tasks</span>
@@ -43,7 +44,7 @@ const Sidebar = () => {
       </div>
 
       {/* Members */}
-      <h4 className="section-title">Members <span><i class="fa-solid fa-plus"></i></span></h4>
+      <h4 className="section-title">Members <span><i className="fa-solid fa-plus"></i></span></h4>
       <div className="sidebar-section">
 
         <div className="text-image-row">
