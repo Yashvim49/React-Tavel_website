@@ -43,7 +43,7 @@ const Sidebar = () => {
       </div>
 
       {/* Members */}
-      <h4 className="section-title">Members</h4>
+      <h4 className="section-title">Members <span><i class="fa-solid fa-plus"></i></span></h4>
       <div className="sidebar-section">
 
         <div className="text-image-row">
@@ -54,7 +54,7 @@ const Sidebar = () => {
           </div>
         </div>
         <div className="text-image-row">
-          <img src="https://www.opticalexpress.co.uk/media/1064/man-with-glasses-smiling-looking-into-distance.jpg" alt="Sandra Perry" className="profile-img" />
+          <img src="https://techcloudltd.com/wp-content/uploads/2024/06/Posing-and-facial-expressions-for-professional-male-headshots-1-1024x727.webp" alt="Sandra Perry" className="profile-img" />
           <div className="text-content">
             <h4>Anatony Cardenes</h4>
             <p>Sales Manager</p>
