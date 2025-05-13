@@ -1,10 +1,10 @@
 import React from 'react'
-import Sidebar from '../Components/Sidebar'
-import '../Styles/Dashboard.css';
+import Sidebar from './Sidebar'
+import '../Styles/Dashboard.css'
 import Newscustomerchart from '../Dashboard_Item/Newscustomerchart'
 import SemiCircularChart from '../Dashboard_Item/Guageroundchart'
 import Dashboardcard from '../Dashboard_Item/Dashboardcard'
-import Navbar from '../Components/Navbar'
+import Navbar from './Navbar'
 const Dashboard = () => {
 
   return (

@@ -7,8 +7,9 @@ import Vision from './Pages/Vision';
 import Faq from './Pages/Faq';
 import Footer from './components/Footer';
 import About from './Pages/About';
-import Dashboard from './Admin/Pages/Dashboard';
-import Adminservices from './Admin/Pages/Services';
+import Dashboard from './Admin/Components/Dashboard';
+import Adminservices from './Admin/Pages/Services/Services';
+import ServiceState from './Admin/context/services/ServiceState';
 
 function AppContent() {
   const location = useLocation();
@@ -17,7 +18,7 @@ function AppContent() {
   return (
     <>
       {!isAdminRoute && <Navbar />}
-      
+
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/service' element={<Service />} />
@@ -35,9 +36,11 @@ function AppContent() {
 
 function App() {
   return (
-    <Router>
-      <AppContent />
-    </Router>
+    <ServiceState>
+      <Router>
+        <AppContent />
+      </Router>
+    </ServiceState>
   );
 }
 
