@@ -1,14 +1,11 @@
-.services-content {
-    /* flex: 1; */
+.vision-content {
     background-color: #e5ebeb;
     padding: 30px;
     height: 80px ;
     margin-top: -19px;
     width: 100%;
   }
-
-/* //add service form */
-  .service-form {
+  .vision-form {
     background: #f9f9f9;
     padding: 20px;
     border-radius: 10px;
@@ -18,8 +15,43 @@
     gap: 15px;
   }
   
-  .service-form input,
-  .service-form textarea {
+  .vision-form input,
+  .vision-form textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .form-buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .form-buttons button {
+    padding: 8px 16px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .form-buttons button[type="button"] {
+    background-color: #222020;
+  }
+  /* //add service form */
+  .vision-form {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .vision-form input,
+  .vision-form textarea {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -45,17 +77,17 @@
   
 
   /* //display service  */
-  .service-table {
+  .vision-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 30px;
 }
-.service-table th{
+.vision-table th{
   background-color: #ccc;
 
 }
-.service-table th,
-.service-table td {
+.vision-table th,
+.vision-table td {
     padding: 12px;
     border: 1px solid #363434;
     text-align: center;
@@ -96,4 +128,3 @@
 .delete-btn:hover {
   background-color: #ad4544;
 }
-

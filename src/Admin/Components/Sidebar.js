@@ -18,7 +18,9 @@ const Sidebar = () => {
       {/* Navigation */}
       <div className="sidebar-section">
         <Link to="/admin"><i className="fa-solid fa-gauge"></i> Dashboard</Link>
-        <Link to="/admin/service"><i className="fas fa-handshake"></i> Services</Link>
+        <Link to="/admin/service"><i className="fas fa-handshake"></i> Service</Link>
+        <Link to="/admin/vision"><i className="fa-solid fa-eye"></i> Vision</Link>
+        <Link to="/admin/faq"><i className="fa-solid fa-question"></i> Faqs</Link>
         <Link to="# " className="task-link">
           <i className="fa-solid fa-briefcase"></i>
           <span className="link-label">Tasks</span>

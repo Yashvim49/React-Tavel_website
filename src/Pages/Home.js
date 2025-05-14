@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import '../Styles/Home.css';
 import '../Styles/Service.css'
 import '../Styles/Vision.css'
+import serviceContext from '../Admin/context/services/serviceContetxt'
+import visionContext from '../Admin/context/visions/visionContetxt';
 
-import serviceItems from '../Data/ServiceItem';
-import VisionItems from '../Data/VisionItem';
+
 const travelImages = [
   "https://images.unsplash.com/photo-1707343848552-893e05dba6ac?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxzZWFyY2h8OHx8dHJhdmVsfGVufDB8fDB8fHww",
   "https://media.istockphoto.com/id/1166378619/photo/large-group-of-happy-friends-in-mountains-area.jpg?s=612x612&w=0&k=20&c=PRlOrqCmlc7QEpTtQw5Blk5NlTtQzT8osgFDK8059p0=",
@@ -16,8 +17,21 @@ const travelImages = [
 ];
 
 const Home = () => {
-  const Items = serviceItems.slice(0, 4);
-  const visonitems = VisionItems;
+  const context = useContext(serviceContext);
+  const { services, getService } = context;
+  const visioncontext = useContext(visionContext);
+  const { visions, getVision } = visioncontext;
+
+  useEffect(() => {
+      getService();
+      getVision();
+  }, []);
+
+
+  const Items = (services || []).slice(0, 4);
+  const vItems = (visions || []).slice(0, 4);
+  
+
   const scrollingImages = [...travelImages, ...travelImages];
   return (
     <>
@@ -28,6 +42,7 @@ const Home = () => {
           <button type="button" className="btn">About Us</button>
         </div>
       </div>
+
       {/* service */}
       <div className="container">
         <h2 className="text-center services-title">Top Services</h2>
@@ -35,7 +50,7 @@ const Home = () => {
           {Items.map((item) => (
             <div className="col-md-3" >
               <div className="card text-center h-100 shadow-sm service-card">
-                <img src={item.image} alt={item.title} className="card-img-top w-50 mx-auto mt-4" />
+                <img src={item.img} alt={item.title} className="card-img-top w-50 mx-auto mt-4" />
                 <div className="card-body">
                   <h5 className="card-title">{item.title}</h5>
                   <p className="card-text">{item.description}</p>
@@ -45,14 +60,15 @@ const Home = () => {
           ))}
         </div>
       </div>
+
       {/* vision */}
       <h2 className="text-center vision-title">Our Vision</h2>
       <div className="container">
         <div className="row">
-          {visonitems.map((item) => (
-            <div className="col-md-3">
+          {vItems.map((item) => (
+            <div className="col-md-3 mb-4">
               <div className="card text-center h-100 shadow-sm">
-                <img src={item.image} alt={item.title} className="card-img-top p-3" style={{ height: '100px', objectFit: 'contain' }} />
+                <img src={item.img} alt={item.title} className="card-img-top p-3" style={{ height: '100px', objectFit: 'contain' }} />
                 <div className="card-body">
                   <h5 className="card-title">{item.title}</h5>
                   <p className="card-text">{item.description}</p>

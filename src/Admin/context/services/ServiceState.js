@@ -6,7 +6,7 @@ const ServiceState = (props) => {
     const servicesInitial = []
     const [services, setservices] = useState(servicesInitial)
 
-    //Get All Note
+    //Get All vison
     const getService = async () => {
         //Todo :api call
         const response = await fetch(`${host}/api/services/fetchallservices`, {

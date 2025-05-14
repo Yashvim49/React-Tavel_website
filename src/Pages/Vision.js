@@ -1,8 +1,14 @@
-import React from 'react'
-import VisionItems from '../Data/VisionItem';
+import React, { useContext, useEffect } from 'react'
 import '../Styles/Vision.css'
+import visionContext from '../Admin/context/visions/visionContetxt'
+
 
 const Vision = () => {
+    const context = useContext(visionContext);
+    const { visions, getVision } = context;
+    useEffect(() => {
+        getVision();
+    }, []);
     return (
         <>
             <div className="vision-header text-center mb-4">
@@ -11,17 +17,21 @@ const Vision = () => {
             <h2 className="text-center vision-title">Our Vision</h2>
             <div className="container">
                 <div className="row">
-                    {VisionItems.map((item) => (
-                        <div className="col-md-3">
+                {visions && visions.length > 0 ? (
+                        visions.map((item) => (
+                        <div className="col-md-3 mb-4">
                             <div className="card text-center h-100 shadow-sm">
-                                <img src={item.image} alt={item.title} className="card-img-top p-3" style={{ height: '100px', objectFit: 'contain' }} />
+                                <img src={item.img} alt={item.title} className="card-img-top p-3" style={{ height: '100px', objectFit: 'contain' }} />
                                 <div className="card-body">
                                     <h5 className="card-title">{item.title}</h5>
                                     <p className="card-text">{item.description}</p>
                                 </div>
                             </div>
                         </div>
-                    ))}
+                     ))
+                     ) : (
+                         <div className="text-center">Loading Visions...</div>
+                     )}
                 </div>
             </div>
         </>

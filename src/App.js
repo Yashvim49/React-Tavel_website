@@ -9,7 +9,11 @@ import Footer from './components/Footer';
 import About from './Pages/About';
 import Dashboard from './Admin/Components/Dashboard';
 import Adminservices from './Admin/Pages/Services/Services';
+import Adminvisions from './Admin/Pages/Visions/Visions';
+import Adminfaqs from './Admin/Pages/Faqs/Faqs';
 import ServiceState from './Admin/context/services/ServiceState';
+import VisionState from './Admin/context/visions/VisionState';
+import FaqState from './Admin/context/faqs/FaqState';
 
 function AppContent() {
   const location = useLocation();
@@ -27,6 +31,8 @@ function AppContent() {
         <Route path='/faq' element={<Faq />} />
         <Route path='/admin' element={<Dashboard />} />
         <Route path='/admin/service' element={<Adminservices />} />
+        <Route path='/admin/vision' element={<Adminvisions />} />
+        <Route path='/admin/faq' element={<Adminfaqs />} />
       </Routes>
 
       {!isAdminRoute && <Footer />}
@@ -36,11 +42,17 @@ function AppContent() {
 
 function App() {
   return (
+
     <ServiceState>
-      <Router>
-        <AppContent />
-      </Router>
+      <VisionState>
+        <FaqState>
+          <Router>
+            <AppContent />
+          </Router>
+        </FaqState>
+      </VisionState>
     </ServiceState>
+
   );
 }
 

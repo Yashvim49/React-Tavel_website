@@ -1,22 +1,24 @@
 import React, { useState, useContext, useEffect } from 'react';
 import Sidebar from '../../Components/Sidebar'
-import serviceContext from '../../context/services/serviceContetxt'
-import Servicesitem from './Servicesitem';
-import AddServices from './AddServices';
-import '../../Styles/Services.css'
+import faqContext from '../../context/faqs/faqContext'
+import AddFaqs from './AddFaqs'
+import Faqsitem from './Faqsitem'
+import '../../Styles/Faqs.css'
 
-const Services = ({ showAlert }) => {
-    const context = useContext(serviceContext);
-    const { services, getService, editService } = context;
+const Faqs = () => {
+    const context = useContext(faqContext);
+    const { faqs, getFaq, editFaq } = context;
+    
     // for search 
     const [searchQuery, setSearchQuery] = useState('');
-    const filteredServices = services.filter((item) =>
-        item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.description.toLowerCase().includes(searchQuery.toLowerCase())
+
+    const filteredFaqs = faqs.filter((item) =>
+        item.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.answer.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     useEffect(() => {
-        getService();
+        getFaq();
     }, []);
 
     const [showAddForm, setShowAddForm] = useState(false);
@@ -24,21 +26,20 @@ const Services = ({ showAlert }) => {
 
     const [formData, setFormData] = useState({
         id: "",
-        etitle: "",
-        edescription: "",
-        eimage: ""
+        equestion: "",
+        eanswer: ""
     });
 
 
-    const updateServices = (currentService) => {
-        setFormData({ id: currentService._id, etitle: currentService.title, edescription: currentService.description, eimage: currentService.img })
+    const updateFaqs = (currentFaq) => {
+        setFormData({ id: currentFaq._id, equestion: currentFaq.question, eanswer: currentFaq.answer })
         setShowEditForm(true);
         setShowAddForm(false);
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        editService(formData.id, formData.etitle, formData.edescription, formData.eimage);
+        editFaq(formData.id, formData.equestion, formData.eanswer);
         setShowEditForm(false);
     }
 
@@ -54,7 +55,7 @@ const Services = ({ showAlert }) => {
         <>
             <div className="dashboard-layout">
                 <Sidebar />
-                <div className="services-content ">
+                <div className="faq-content ">
                     <div className="dashboard-header">
                         <div className="left-controls">
                             <div className="search-wrapper">
@@ -72,23 +73,22 @@ const Services = ({ showAlert }) => {
                             <button className="account-button">
                                 <i className="fa-regular fa-user"></i> Me
                             </button>
-                            <button className="add-button" onClick={() => { setShowAddForm(true); setShowEditForm(false); }}>+ Add Services</button>
+                            <button className="add-button" onClick={() => { setShowAddForm(true); setShowEditForm(false); }}>+ Add Faqs</button>
                         </div>
                     </div>
                     <h2 className="text-center fw-bold my-4">
-                        <span className="text-primary">Services</span>
+                        <span className="text-primary">Frequently Asked Questions</span>
                     </h2>
 
 
                     {/* Conditional Form Rendering */}
-                    <AddServices showForm={showAddForm} setShowForm={setShowAddForm} />
+                    <AddFaqs showForm={showAddForm} setShowForm={setShowAddForm} />
 
                     {showEditForm && (
-                        <form className="service-form" onSubmit={handleSubmit}>
-                            <h3>Edit </h3>
-                            <input type="text" id="etitle" name="etitle" placeholder="Title" value={formData.etitle} onChange={handleChange} required />
-                            <textarea name="edescription" id="edescription" placeholder="Description" value={formData.edescription} onChange={handleChange} required ></textarea>
-                            <input type="text" id="eimage" name="eimage" placeholder="Image URL" value={formData.eimage} onChange={handleChange} required />
+                        <form className="faq-form" onSubmit={handleSubmit}>
+                            <h3>Edit Faqs..</h3>
+                            <input type="text" id="equestion" name="equestion"  value={formData.equestion} onChange={handleChange} required />
+                            <textarea name="eanswer" id="eanswer"  value={formData.eanswer} onChange={handleChange} required ></textarea>
                             <div className="form-buttons">
                                 <button type="submit">Update</button>
                                 <button type="button" onClick={() => setShowEditForm(false)}>Cancel</button>
@@ -97,37 +97,36 @@ const Services = ({ showAlert }) => {
                     )}
 
                     {/* search */}
-                    {services.length === 0 && (
+                    {faqs.length === 0 && (
                         <div className="container" style={{ marginTop: '20px' }}>
-                            No services available
+                            No Faq available
                         </div>
                     )}
 
                     {/* show list */}
 
-                    {filteredServices.length > 0 ? (
-                        <table className="service-table">
+                    {filteredFaqs.length > 0 ? (
+                        <table className="faq-table">
 
                             <thead>
                                 <tr>
-                                    <th>Title</th>
-                                    <th>Description</th>
-                                    <th>Image</th>
+                                    <th>question</th>
+                                    <th>answer</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {filteredServices.map((service) => (
-                                    <Servicesitem
-                                        key={service._id}
-                                        service={service}
-                                        updateServices={updateServices}
+                                {filteredFaqs.map((faq) => (
+                                    <Faqsitem
+                                        key={faq._id}
+                                        faq={faq}
+                                        updateFaqs={updateFaqs}
                                     />
                                 ))}
                             </tbody>
                         </table>
-                    ) : services.length > 0 && (
-                        <div className="text-center mt-3">No matching services found.</div>
+                    ) : faqs.length > 0 && (
+                        <div className="text-center mt-3">No matching Faq found.</div>
                     )}
                 </div>
             </div>
@@ -135,4 +134,4 @@ const Services = ({ showAlert }) => {
     );
 };
 
-export default Services;
+export default Faqs;

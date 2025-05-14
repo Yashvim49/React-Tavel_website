@@ -1,10 +1,11 @@
 import React, { useContext, useState } from 'react'
 import serviceContext from '../../context/services/serviceContetxt'
+import { Alert } from 'bootstrap';
 
-const AddServices = ({showForm,setShowForm,showAlert}) => {
+const AddServices = ({ showForm, setShowForm }) => {
     const context = useContext(serviceContext);
     const { addServices } = context;
-    
+
     const [formData, setFormData] = useState({
         title: "",
         description: "",
@@ -15,12 +16,11 @@ const AddServices = ({showForm,setShowForm,showAlert}) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
 
     };
-    
+
     const handleSubmit = (e) => {
         e.preventDefault();
         addServices(formData.title, formData.description, formData.image);
         setFormData({ title: "", description: "", img: "" })
-        if (showAlert) showAlert("Service Added Successfully", "success");
         setShowForm(false);
     }
 

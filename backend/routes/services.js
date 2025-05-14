@@ -43,13 +43,13 @@
 router.put('/updateservices/:id', async (req, res) => {
     const { title, description, img } = req.body;
     try {
-        //create new note obj
+        //create new service obj
         const newservices = {};
         if (title) { newservices.title = title };
         if (description) { newservices.description = description };
         if (img) { newservices.img = img };
 
-        //find the note to be updated
+        //find the service to be updated
         let service = await services.findById(req.params.id);
         if (!service) { res.status(404).send("Not Found") }
        
@@ -62,7 +62,7 @@ router.put('/updateservices/:id', async (req, res) => {
 })
 
 
-//ROUTE - 4 :delete notes using delete "/api/services/deleteservices" 
+//ROUTE - 4 :delete service using delete "/api/services/deleteservices" 
 router.delete('/deleteservices/:id', async (req, res) => {
     try {
         //find the note to be updated and update it
@@ -71,7 +71,7 @@ router.delete('/deleteservices/:id', async (req, res) => {
 
         
         service = await services.findByIdAndDelete(req.params.id)
-        res.json({ "Success": "Note Has Been Deleted", service: service });
+        res.json({ "Success": "service Has Been Deleted", service: service });
     } catch (error) {
         console.error(error.message);
         res.status(500).send("Internal Server Error");
