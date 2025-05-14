@@ -45,6 +45,7 @@ const FaqsState = (props) => {
             }
         });
         const json =await response.json();
+        console.log(json)
         const newFaqs = faqs.filter((faq) => { return faq._id !== id })
         setfaqs(newFaqs)
        

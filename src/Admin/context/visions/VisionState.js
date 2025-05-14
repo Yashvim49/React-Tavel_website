@@ -45,6 +45,7 @@ const VisionState = (props) => {
             }
         });
         const json =await response.json();
+        console.log(json)
         const newVisions = visions.filter((vision) => { return vision._id !== id })
         setvisions(newVisions)
     }

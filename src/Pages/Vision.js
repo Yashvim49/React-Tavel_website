@@ -6,9 +6,10 @@ import visionContext from '../Admin/context/visions/visionContetxt'
 const Vision = () => {
     const context = useContext(visionContext);
     const { visions, getVision } = context;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         getVision();
-    }, []);
+    }, [getVision]);
     return (
         <>
             <div className="vision-header text-center mb-4">

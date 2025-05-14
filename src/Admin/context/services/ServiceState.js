@@ -43,7 +43,8 @@ const ServiceState = (props) => {
                 'Content-Type': 'application/json',
             }
         });
-        const json =await response.json();
+        const json = await response.json();
+        console.log(json)
         const newServices = services.filter((service) => { return service._id !== id })
         setservices(newServices)
        

@@ -21,11 +21,11 @@ const Home = () => {
   const { services, getService } = context;
   const visioncontext = useContext(visionContext);
   const { visions, getVision } = visioncontext;
-
+// eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
       getService();
       getVision();
-  }, []);
+  }, [getVision,getService]);
 
 
   const Items = (services || []).slice(0, 4);

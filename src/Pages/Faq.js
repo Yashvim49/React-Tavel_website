@@ -10,9 +10,10 @@ const Faq = () => {
 
     const context = useContext(faqContext);
     const { faqs, getFaq } = context;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         getFaq();
-    }, []);
+    }, [getFaq]);
 
 
     return (

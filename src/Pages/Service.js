@@ -6,9 +6,10 @@ import '../Styles/Service.css';
 const Service = () => {
     const context = useContext(serviceContext);
     const { services, getService } = context;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         getService();
-    }, []);
+    }, [getService]);
 
     return (
         <>

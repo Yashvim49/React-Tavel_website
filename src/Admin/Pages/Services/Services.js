@@ -5,19 +5,72 @@ import Servicesitem from './Servicesitem';
 import AddServices from './AddServices';
 import '../../Styles/Services.css'
 
-const Services = ({ showAlert }) => {
+const Services = () => {
     const context = useContext(serviceContext);
     const { services, getService, editService } = context;
-    // for search 
-    const [searchQuery, setSearchQuery] = useState('');
-    const filteredServices = services.filter((item) =>
-        item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.description.toLowerCase().includes(searchQuery.toLowerCase())
-    );
 
+    // for search  and filter
+    //filter
+    const [filterDate, setFilterDate] = useState('');
+    const [dateFilterOption, setDateFilterOption] = useState('');
+    const [showfilterOptions, setShowfilterOptions] = useState(false);
+    //serch
+    const [searchQuery, setSearchQuery] = useState('');
+
+
+    const filteredServices = [...services]
+        .filter((item) =>
+            item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            item.description.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+        .filter((item) => {
+            if (!filterDate) return true;
+            return new Date(item.date) <= new Date(filterDate);
+
+        });
+    //aplly filter newest oldest
+    if (dateFilterOption) {
+        filteredServices.sort((a, b) => {
+            const dateA = new Date(a.date);
+            const dateB = new Date(b.date);
+            if (dateA < dateB) return dateFilterOption === 'oldest' ? -1 : 1;
+            if (dateA > dateB) return dateFilterOption === 'oldest' ? 1 : -1;
+            return 0;
+        });
+    }
+    const resetfilter = () => {
+        setFilterDate('');
+        setDateFilterOption('');
+        setShowfilterOptions(false);
+    }
+
+    //sort
+    const [sortService, setsortService] = useState('');
+    const [sortKey, setSortKey] = useState('title');
+    const [showSortOptions, setShowSortOptions] = useState(false);
+    const handelSort = (Service => {
+        setsortService(Service);
+        setSortKey('title');
+        setShowSortOptions(false);
+    })
+    const resetSort = () => {
+        setsortService('');
+        setSortKey('');
+        setShowSortOptions(false);
+    }
+    if (sortKey && sortService) {
+        filteredServices.sort((a, b) => {
+            const valA = a[sortKey]?.toLowerCase() || '';
+            const valB = b[sortKey]?.toLowerCase() || '';
+            if (valA < valB) return sortService === 'asc' ? -1 : 1;
+            if (valA > valB) return sortService === 'asc' ? 1 : -1;
+            return 0;
+        })
+    }
+// eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         getService();
-    }, []);
+    }, [getService]);
 
     const [showAddForm, setShowAddForm] = useState(false);
     const [showEditForm, setShowEditForm] = useState(false);
@@ -43,12 +96,9 @@ const Services = ({ showAlert }) => {
     }
 
 
-
-
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
-
 
     return (
         <>
@@ -63,12 +113,61 @@ const Services = ({ showAlert }) => {
                             </div>
                         </div>
                         <div className="right-controls">
-                            <button className="sort-button">
-                                <i className="fa-solid fa-sort"></i> Sort
-                            </button>
-                            <button className="filter-button">
-                                <i className="fa-solid fa-filter"></i> Filter
-                            </button>
+                            <div className="sort-dropdown-wrapper" style={{ position: 'relative' }}>
+                                <button className="sort-button" onClick={() => {
+                                    setShowSortOptions(!showSortOptions);
+                                    setShowfilterOptions(false);
+                                }}
+                                >
+                                    <i className="fa-solid fa-sort" /> Sort ({sortService || 'default'})
+                                </button>
+
+                                {showSortOptions && (
+                                    <div className="sort-dropdown">
+                                        <form>
+                                            <label className="sort-option">
+                                                <input type="radio" name="sort" value="" checked={sortService === ''} onChange={() => resetSort()} />
+                                                Default
+                                            </label>
+                                            <label className="sort-option">
+                                                <input type="radio" name="sort" value="asc" checked={sortService === 'asc'} onChange={() => handelSort('asc')} />
+                                                ⬆ Ascending
+                                            </label>
+                                            <label className="sort-option">
+                                                <input type="radio" name="sort" value="desc" checked={sortService === 'desc'} onChange={() => handelSort('desc')} />
+                                                ⬇ Descending
+                                            </label>
+                                        </form>
+                                    </div>
+
+                                )}
+                            </div>
+                            {/* //filter */}
+                            <div className="sort-dropdown-wrapper" style={{ position: 'relative' }}>
+                                <button className="sort-button" onClick={() => { setShowfilterOptions(!showfilterOptions); setShowSortOptions(false); }}>
+                                    <i className="fa-solid fa-filter"></i> Filter </button>
+
+                                {showfilterOptions && (
+                                    <div className="sort-dropdown">
+                                        <form>
+                                            <label className="sort-option">
+                                                <input type="radio" name="dateFilter" value="" checked={dateFilterOption === ''} onChange={resetfilter} />
+                                                Default
+                                            </label>
+                                            <label className="sort-option">
+                                                <input type="radio" name="dateFilter" value="newest" checked={dateFilterOption === 'newest'} onChange={() => {
+                                                    setDateFilterOption('newest'); setShowfilterOptions(false);
+                                                }} />
+                                                Newest
+                                            </label>
+                                            <label className="sort-option">
+                                                <input type="radio" name="dateFilter" value="oldest" checked={dateFilterOption === 'oldest'} onChange={() => { setDateFilterOption('oldest'); setShowfilterOptions(false); }} />
+                                                Oldest
+                                            </label>
+                                        </form>
+                                    </div>
+                                )}
+                            </div>
                             <button className="account-button">
                                 <i className="fa-regular fa-user"></i> Me
                             </button>
@@ -78,7 +177,6 @@ const Services = ({ showAlert }) => {
                     <h2 className="text-center fw-bold my-4">
                         <span className="text-primary">Services</span>
                     </h2>
-
 
                     {/* Conditional Form Rendering */}
                     <AddServices showForm={showAddForm} setShowForm={setShowAddForm} />
@@ -118,11 +216,7 @@ const Services = ({ showAlert }) => {
                             </thead>
                             <tbody>
                                 {filteredServices.map((service) => (
-                                    <Servicesitem
-                                        key={service._id}
-                                        service={service}
-                                        updateServices={updateServices}
-                                    />
+                                    <Servicesitem key={service._id} service={service} updateServices={updateServices} />
                                 ))}
                             </tbody>
                         </table>
@@ -130,7 +224,7 @@ const Services = ({ showAlert }) => {
                         <div className="text-center mt-3">No matching services found.</div>
                     )}
                 </div>
-            </div>
+            </div >
         </>
     );
 };

@@ -128,3 +128,29 @@
 .delete-btn:hover {
   background-color: #ad4544;
 }
+
+/* //sort */
+.sort-dropdown {
+  position: absolute;
+  top: 134%;
+  left: 0;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  width: 150px;
+}
+
+.sort-option {
+  display: block;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.sort-option:hover {
+  background-color: #f0f0f0;
+}
+
+.sort-option input {
+  margin-right: 8px;
+}
