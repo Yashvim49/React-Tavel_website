@@ -1,17 +1,25 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Sidebar from './Sidebar'
 import '../Styles/Dashboard.css'
 import Newscustomerchart from '../Dashboard_Item/Newscustomerchart'
 import SemiCircularChart from '../Dashboard_Item/Guageroundchart'
 import Dashboardcard from '../Dashboard_Item/Dashboardcard'
 import Navbar from './Navbar'
+import { useNavigate } from 'react-router-dom'
 const Dashboard = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!localStorage.getItem('token')) {
+      navigate('/admin'); 
+    }
+  }, [navigate]);
 
   return (
     <>
       <div className="dashboard-layout">
-        {/* import sidebar here */}
+      
         <Sidebar />
+        {/* import sidebar here */}
         <div className="dashboard-content">
           {/* import navbar here */}
           <Navbar />

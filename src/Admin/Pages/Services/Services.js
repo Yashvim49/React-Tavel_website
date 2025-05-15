@@ -168,9 +168,7 @@ const Services = () => {
                                     </div>
                                 )}
                             </div>
-                            <button className="account-button">
-                                <i className="fa-regular fa-user"></i> Me
-                            </button>
+                          
                             <button className="add-button" onClick={() => { setShowAddForm(true); setShowEditForm(false); }}>+ Add Services</button>
                         </div>
                     </div>

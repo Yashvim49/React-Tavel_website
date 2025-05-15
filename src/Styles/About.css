@@ -21,7 +21,7 @@
 
   .about-header {
     height: 40vh; 
-    background-image: url('https://img.freepik.com/free-photo/beautiful-nature-landscape-with-black-sandy-beach-ocean_23-2151380422.jpg');
+    background-image: url('https://windows10spotlight.com/wp-content/uploads/2021/04/b26324da81a4d2a7baf15b71a0bb0b0b.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -41,6 +41,7 @@
     justify-content: space-between;
     padding: 40px 10%;
     gap: 30px;
+    background-attachment: fixed;
     box-sizing: border-box;
     background-image: url('https://www.wavetronics.co.in/img/about-us.jpg');
 }

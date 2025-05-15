@@ -164,9 +164,7 @@ const Faqs = () => {
                                     </div>
                                 )}
                             </div>
-                            <button className="account-button">
-                                <i className="fa-regular fa-user"></i> Me
-                            </button>
+                           
                             <button className="add-button" onClick={() => { setShowAddForm(true); setShowEditForm(false); }}>+ Add Faqs</button>
                         </div>
                     </div>

@@ -11,6 +11,8 @@ app.use(cors())
 app.use(express.json())
 
 //Available route
+app.use('/api/auth',require('./routes/auth'))
+
 app.use('/api/services',require('./routes/services'))
 app.use('/api/visions',require('./routes/visions'))
 app.use('/api/faqs',require('./routes/faqs'))

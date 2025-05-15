@@ -2,6 +2,8 @@
   display: flex;
   height: 100%;
   width: 100%;
+  position: absolute;
+  
 }
 
 .dashboard-content {
@@ -11,6 +13,9 @@
   height: 310px ;
   margin-top: -19px;
   width: 100%;
+
+  margin-left: 240px; 
+  
 }
 
 /* SEARCH  */
@@ -68,7 +73,7 @@
 
 .sort-button,
 .account-button,
-.filter-button {
+.filter-button{
   background-color:  #e5ebeb;
   border: 1px;
   color: #161414;
@@ -78,9 +83,22 @@
   background-color: #000;
   color: white;
 }
+.logout-button {
+  background-color: #9cb3ae;
+  color: rgb(3, 3, 3);
+  border: 1px; /* ✅ Border will now appear */
+  padding: 8px 16px;        /* Optional: adds space inside button */
+  border-radius: 4px;       /* Optional: rounded corners */
+  cursor: pointer;          /* Optional: shows pointer on hover */
+}
+
+.logout-button:hover {
+  background-color: #1312129d;
+}
+
 
 .add-button:hover {
-  background-color: #333;
+  background-color: #1d1b1b9d;
 }
 
 /* search---over */

@@ -48,6 +48,7 @@
     justify-content: space-between;
     padding: 40px 10%;
     gap: 40px;
+    background-attachment: fixed;
     box-sizing: border-box;
     background-image: url('https://document360.com/wp-content/uploads/2021/12/top_faq_software_comparison.png');
 }
@@ -95,22 +96,3 @@
     object-fit: cover;
 }
 
-/* Make responsive */
-@media (max-width: 768px) {
-    .faq-main-wrapper {
-        flex-direction: column;
-    }
-
-    .faq-image {
-        margin-top: 20px;
-    }
-
-    .faq-title::after {
-        left: 50%;
-        transform: translateX(-50%);
-    }
-
-    .faq-title {
-        text-align: center;
-    }
-}

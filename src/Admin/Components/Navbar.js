@@ -1,6 +1,12 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+  let navigate = useNavigate();
+    const handellogout = () => {
+        localStorage.removeItem('token');
+        navigate('/admin');
+      }
     return (
         <>
             <div className="dashboard-header">
@@ -13,16 +19,12 @@ const Navbar = () => {
                 </div>
 
                 <div className="right-controls">
-                    <button className="sort-button">
-                        <i className="fa-solid fa-sort"></i> Sort
-                    </button>
-                    <button className="filter-button">
-                        <i className="fa-solid fa-filter"></i> Filter
-                    </button>
                     <button className="account-button">
                         <i className="fa-regular fa-user"></i> Me
                     </button>
                     <button className="add-button">+ Add Customer</button>
+                    {!localStorage.getItem('token') ? <form>
+            </form> : <button onClick={handellogout} className="logout-button">Logout</button>}
                 </div>
             </div>
         </>

@@ -14,6 +14,8 @@ import Adminfaqs from './Admin/Pages/Faqs/Faqs';
 import ServiceState from './Admin/context/services/ServiceState';
 import VisionState from './Admin/context/visions/VisionState';
 import FaqState from './Admin/context/faqs/FaqState';
+import AdminLoign from './Admin/Components/Login';
+import AdminSignup from './Admin/Components/Signup'
 
 function AppContent() {
   const location = useLocation();
@@ -29,10 +31,12 @@ function AppContent() {
         <Route path='/vision' element={<Vision />} />
         <Route path='/about' element={<About />} />
         <Route path='/faq' element={<Faq />} />
-        <Route path='/admin' element={<Dashboard />} />
+        <Route path='/admin/dashboard' element={<Dashboard />} />
         <Route path='/admin/service' element={<Adminservices />} />
         <Route path='/admin/vision' element={<Adminvisions />} />
         <Route path='/admin/faq' element={<Adminfaqs />} />
+        <Route path='/admin' element={<AdminLoign />} />
+        <Route path='/admin/Signup' element={<AdminSignup />} />
       </Routes>
 
       {!isAdminRoute && <Footer />}
