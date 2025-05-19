@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import Sidebar from '../../Components/Sidebar'
 import serviceContext from '../../context/services/serviceContetxt'
 import Servicesitem from './Servicesitem';
@@ -18,16 +18,20 @@ const Services = () => {
     const [searchQuery, setSearchQuery] = useState('');
 
 
-    const filteredServices = [...services]
-        .filter((item) =>
-            item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            item.description.toLowerCase().includes(searchQuery.toLowerCase())
+    const filteredServices = (services ?? [])
+        .filter(item =>
+            (item?.title ?? '')
+                .toLowerCase()
+                .includes((searchQuery ?? '').toLowerCase()) ||
+            (item?.description ?? '')
+                .toLowerCase()
+                .includes((searchQuery ?? '').toLowerCase())
         )
-        .filter((item) => {
+        .filter(item => {
             if (!filterDate) return true;
             return new Date(item.date) <= new Date(filterDate);
-
         });
+
     //aplly filter newest oldest
     if (dateFilterOption) {
         filteredServices.sort((a, b) => {
@@ -67,13 +71,12 @@ const Services = () => {
             return 0;
         })
     }
-// eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         getService();
     }, [getService]);
 
     const [showAddForm, setShowAddForm] = useState(false);
-    const [showEditForm, setShowEditForm] = useState(false);
 
     const [formData, setFormData] = useState({
         id: "",
@@ -82,23 +85,28 @@ const Services = () => {
         eimage: ""
     });
 
+    const ref = useRef(null)
+    const refClose = useRef(null)
 
     const updateServices = (currentService) => {
+        ref.current.click();
         setFormData({ id: currentService._id, etitle: currentService.title, edescription: currentService.description, eimage: currentService.img })
-        setShowEditForm(true);
+        setUploadType(currentService.image?.startsWith("blob:") ? "file" : "url");
         setShowAddForm(false);
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
         editService(formData.id, formData.etitle, formData.edescription, formData.eimage);
-        setShowEditForm(false);
+        refClose.current.click();
     }
 
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
+    const [uploadType, setUploadType] = useState("url");
+
 
     return (
         <>
@@ -126,7 +134,7 @@ const Services = () => {
                                     <div className="sort-dropdown">
                                         <form>
                                             <label className="sort-option">
-                                                <input type="radio" name="sort" value="" checked={sortService === ''} onChange={() => resetSort()} />
+                                                <input type="radio" name="sort" value="" minLength={3} checked={sortService === ''} onChange={() => resetSort()} />
                                                 Default
                                             </label>
                                             <label className="sort-option">
@@ -168,8 +176,8 @@ const Services = () => {
                                     </div>
                                 )}
                             </div>
-                          
-                            <button className="add-button" onClick={() => { setShowAddForm(true); setShowEditForm(false); }}>+ Add Services</button>
+
+                            <button className="add-button" onClick={() => { setShowAddForm(true); }}>+ Add Services</button>
                         </div>
                     </div>
                     <h2 className="text-center fw-bold my-4">
@@ -178,19 +186,100 @@ const Services = () => {
 
                     {/* Conditional Form Rendering */}
                     <AddServices showForm={showAddForm} setShowForm={setShowAddForm} />
+                    <button ref={ref} type="button" className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Launch demo modal
+                    </button>
+                    <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div className="modal-dialog">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h1 className="modal-title fs-5" id="exampleModalLabel">Edit</h1>
+                                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div className="modal-body">
+                                    <form className="service-form">
+                                        <h3>Edit </h3>
+                                        <input type="text" id="etitle" name="etitle" placeholder="Title" value={formData.etitle} onChange={handleChange} required />
+                                        <textarea name="edescription" id="edescription" placeholder="Description" value={formData.edescription} onChange={handleChange} required ></textarea>
+                                        {/* <input type="text" id="eimage" name="eimage" placeholder="Image URL" value={formData.eimage} onChange={handleChange} required /> */}
+                                        {/* Upload Options */}
+                                        <div className="upload-options">
+                                            <label>
+                                                <input
+                                                    type="radio"
+                                                    name="editUploadType"
+                                                    value="url"
+                                                    checked={uploadType === "url"}
+                                                    onChange={() => {
+                                                        setUploadType("url");
+                                                        setFormData({ ...formData, eimage: "" });
+                                                    }}
+                                                />
+                                                Use Image URL
+                                            </label>
+                                            <label>
+                                                <input
+                                                    type="radio"
+                                                    name="editUploadType"
+                                                    value="file"
+                                                    checked={uploadType === "file"}
+                                                    onChange={() => {
+                                                        setUploadType("file");
+                                                        setFormData({ ...formData, eimage: "" });
+                                                    }}
+                                                />
+                                                Upload from PC
+                                            </label>
+                                        </div>
 
-                    {showEditForm && (
-                        <form className="service-form" onSubmit={handleSubmit}>
-                            <h3>Edit </h3>
-                            <input type="text" id="etitle" name="etitle" placeholder="Title" value={formData.etitle} onChange={handleChange} required />
-                            <textarea name="edescription" id="edescription" placeholder="Description" value={formData.edescription} onChange={handleChange} required ></textarea>
-                            <input type="text" id="eimage" name="eimage" placeholder="Image URL" value={formData.eimage} onChange={handleChange} required />
-                            <div className="form-buttons">
-                                <button type="submit">Update</button>
-                                <button type="button" onClick={() => setShowEditForm(false)}>Cancel</button>
+                                        {/* Conditionally render image input */}
+                                        {uploadType === "url" ? (
+                                            <input
+                                                type="text"
+                                                id="eimage"
+                                                name="eimage"
+                                                placeholder="Image URL"
+                                                value={formData.eimage}
+                                                onChange={handleChange}
+                                                required
+                                            />
+                                        ) : (
+                                            <input
+                                                type="file"
+                                                id="eimageFile"
+                                                name="eimageFile"
+                                                onChange={(e) => {
+                                                    const file = e.target.files[0];
+                                                    if (file) {
+                                                        const imageURL = URL.createObjectURL(file);
+                                                        setFormData({ ...formData, eimage: imageURL });
+                                                    }
+                                                }}
+                                                required
+                                            />
+                                        )}
+
+                                        {/* Image Preview */}
+                                        {formData.eimage && (
+                                            <img
+                                                src={formData.eimage}
+                                                alt="Preview"
+                                                className="image-preview"
+                                                style={{ width: "100px", height: "auto", margin: "10px 0", borderRadius: "8px" }}
+                                            />
+                                        )}
+
+
+                                    </form>
+                                </div>
+                                <div className="modal-footer form-buttons">
+                                    <button onClick={handleSubmit} type="submit">Update</button>
+                                    <button ref={refClose} type="button" data-bs-dismiss="modal">Close</button>
+                                </div>
                             </div>
-                        </form>
-                    )}
+                        </div>
+                    </div>
+
 
                     {/* search */}
                     {services.length === 0 && (

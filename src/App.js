@@ -16,6 +16,10 @@ import VisionState from './Admin/context/visions/VisionState';
 import FaqState from './Admin/context/faqs/FaqState';
 import AdminLoign from './Admin/Components/Login';
 import AdminSignup from './Admin/Components/Signup'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 
 function AppContent() {
   const location = useLocation();
@@ -38,7 +42,7 @@ function AppContent() {
         <Route path='/admin' element={<AdminLoign />} />
         <Route path='/admin/Signup' element={<AdminSignup />} />
       </Routes>
-
+      <ToastContainer />
       {!isAdminRoute && <Footer />}
     </>
   );

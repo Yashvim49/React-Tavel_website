@@ -24,7 +24,7 @@ const Navbar = () => {
                     </button>
                     <button className="add-button">+ Add Customer</button>
                     {!localStorage.getItem('token') ? <form>
-            </form> : <button onClick={handellogout} className="logout-button">Logout</button>}
+            </form> : <button onClick={handellogout} className="logout-button">Logout <i className="fa-solid fa-arrow-right-from-bracket"/></button>}
                 </div>
             </div>
         </>

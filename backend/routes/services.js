@@ -30,14 +30,12 @@
                 const service = new services({ title, description, img })
                 const savedService = await service.save();
                 res.json(savedService);
-                
 
             } catch (error) {
                 console.error(error.message);
                 res.status(500).send("Internal Server Error");
             }
         })
-
 
 //ROUTE - 3 :update eexisting services using put "/api/services/updateservices"
 router.put('/updateservices/:id', async (req, res) => {
@@ -61,7 +59,6 @@ router.put('/updateservices/:id', async (req, res) => {
     }
 })
 
-
 //ROUTE - 4 :delete service using delete "/api/services/deleteservices" 
 router.delete('/deleteservices/:id', async (req, res) => {
     try {
@@ -78,4 +75,4 @@ router.delete('/deleteservices/:id', async (req, res) => {
     }
 })
 
-    module.exports = router;
+module.exports = router;

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import '../../Styles/Visions.css'
 import Sidebar from '../../Components/Sidebar'
 import AddVisions from './AddVisions';
@@ -25,7 +25,7 @@ const Visions = () => {
       if (!filterDate) return true;
       return new Date(item.date) <= new Date(filterDate);
     });
-  //aplly filter newest oldest
+  // aplly filter newest oldest
   if (dateFilterOption) {
     filteredVisions.sort((a, b) => {
       const dateA = new Date(a.date);
@@ -63,13 +63,12 @@ const Visions = () => {
       return 0;
     })
   }
-// eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     getVision();
   }, [getVision]);
 
   const [showAddForm, setShowAddForm] = useState(false);
-  const [showEditForm, setShowEditForm] = useState(false);
 
   const [formData, setFormData] = useState({
     id: "",
@@ -78,20 +77,27 @@ const Visions = () => {
     eimage: ""
   });
 
+  const ref = useRef(null)
+  const refClose = useRef(null)
+
   const updateVisions = (currentVision) => {
+    ref.current.click();
     setFormData({ id: currentVision._id, etitle: currentVision.title, edescription: currentVision.description, eimage: currentVision.img })
-    setShowEditForm(true);
+    setUploadType(currentVision.image?.startsWith("blob:") ? "file" : "url");
     setShowAddForm(false);
   }
   const handleSubmit = (e) => {
     e.preventDefault();
     editVision(formData.id, formData.etitle, formData.edescription, formData.eimage);
-    setShowEditForm(false);
+    refClose.current.click();
   }
+
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  }
+  };
+  const [uploadType, setUploadType] = useState("url");
+
   return (
     <>
       <div className="dashboard-layout">
@@ -107,9 +113,9 @@ const Visions = () => {
             <div className="right-controls">
               <div className="sort-dropdown-wrapper" style={{ position: 'relative' }}>
                 <button className="sort-button" onClick={() => {
-                                    setShowSortOptions(!showSortOptions);
-                                    setShowfilterOptions(false);
-                                }}>
+                  setShowSortOptions(!showSortOptions);
+                  setShowfilterOptions(false);
+                }}>
                   <i className="fa-solid fa-sort" /> Sort ({sortVision || 'default'})
                 </button>
 
@@ -159,8 +165,8 @@ const Visions = () => {
                   </div>
                 )}
               </div>
-            
-              <button className="add-button" onClick={() => { setShowAddForm(true); setShowEditForm(false); }}>+ Add Vision</button>
+
+              <button className="add-button" onClick={() => { setShowAddForm(true); }}>+ Add Vision</button>
 
             </div>
           </div>
@@ -169,18 +175,98 @@ const Visions = () => {
           </h2>
 
           <AddVisions showForm={showAddForm} setShowForm={setShowAddForm} />
-          {showEditForm && (
-            <form className="vision-form" onSubmit={handleSubmit}>
-              <h3>Edit </h3>
-              <input type="text" id="etitle" name="etitle" placeholder="Title" value={formData.etitle} onChange={handleChange} required />
-              <textarea name="edescription" id="edescription" placeholder="Description" value={formData.edescription} onChange={handleChange} required ></textarea>
-              <input type="text" id="eimage" name="eimage" placeholder="Image URL" value={formData.eimage} onChange={handleChange} required />
-              <div className="form-buttons">
-                <button type="submit">Update</button>
-                <button type="button" onClick={() => setShowEditForm(false)}>Cancel</button>
+          <button ref={ref} type="button" className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Launch demo modal
+          </button>
+          <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h1 className="modal-title fs-5" id="exampleModalLabel">Edit</h1>
+                  <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div className="modal-body">
+                  <form className="vision-form" onSubmit={handleSubmit}>
+                    <h3>Edit</h3>
+                    <input type="text" id="etitle" name="etitle" placeholder="Title" value={formData.etitle} onChange={handleChange} required />
+                    <textarea name="edescription" id="edescription" placeholder="Description" value={formData.edescription} onChange={handleChange} required ></textarea>
+                    {/* Upload Options */}
+                    <div className="upload-options">
+                      <label>
+                        <input
+                          type="radio"
+                          name="editUploadType"
+                          value="url"
+                          checked={uploadType === "url"}
+                          onChange={() => {
+                            setUploadType("url");
+                            setFormData({ ...formData, eimage: "" });
+                          }}
+                        />
+                        Use Image URL
+                      </label>
+                      <label>
+                        <input
+                          type="radio"
+                          name="editUploadType"
+                          value="file"
+                          checked={uploadType === "file"}
+                          onChange={() => {
+                            setUploadType("file");
+                            setFormData({ ...formData, eimage: "" });
+                          }}
+                        />
+                        Upload from PC
+                      </label>
+                    </div>
+
+                    {/* Conditionally render image input */}
+                    {uploadType === "url" ? (
+                      <input
+                        type="text"
+                        id="eimage"
+                        name="eimage"
+                        placeholder="Image URL"
+                        value={formData.eimage}
+                        onChange={handleChange}
+                        required
+                      />
+                    ) : (
+                      <input
+                        type="file"
+                        id="eimageFile"
+                        name="eimageFile"
+                        onChange={(e) => {
+                          const file = e.target.files[0];
+                          if (file) {
+                            const imageURL = URL.createObjectURL(file);
+                            setFormData({ ...formData, eimage: imageURL });
+                          }
+                        }}
+                        required
+                      />
+                    )}
+
+                    {/* Image Preview */}
+                    {formData.eimage && (
+                      <img
+                        src={formData.eimage}
+                        alt="Preview"
+                        className="image-preview"
+                        style={{ width: "100px", height: "auto", margin: "10px 0", borderRadius: "8px" }}
+                      />
+                    )}
+                  </form>
+                </div>
+                <div className="modal-footer form-buttons">
+                  <button onClick={handleSubmit} type="submit">Update</button>
+                  <button ref={refClose} type="button" data-bs-dismiss="modal">Close</button>
+                </div>
               </div>
-            </form>
-          )}
+            </div>
+          </div>
+
+
           {/* search */}
           {visions.length === 0 && (
             <div className="container" style={{ marginTop: '20px' }}>

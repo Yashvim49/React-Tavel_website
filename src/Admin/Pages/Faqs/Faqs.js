@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import Sidebar from '../../Components/Sidebar'
 import faqContext from '../../context/faqs/faqContext'
 import AddFaqs from './AddFaqs'
@@ -66,14 +66,12 @@ const Faqs = () => {
             return 0;
         })
     }
-// eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         getFaq();
     }, [getFaq]);
 
     const [showAddForm, setShowAddForm] = useState(false);
-    const [showEditForm, setShowEditForm] = useState(false);
-
     const [formData, setFormData] = useState({
         id: "",
         equestion: "",
@@ -81,20 +79,24 @@ const Faqs = () => {
     });
 
     const updateFaqs = (currentFaq) => {
+        ref.current.click();
         setFormData({ id: currentFaq._id, equestion: currentFaq.question, eanswer: currentFaq.answer })
-        setShowEditForm(true);
         setShowAddForm(false);
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
         editFaq(formData.id, formData.equestion, formData.eanswer);
-        setShowEditForm(false);
+        refClose.current.click();
+
     }
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
+
+    const ref = useRef(null)
+    const refClose = useRef(null)
 
 
     return (
@@ -164,29 +166,42 @@ const Faqs = () => {
                                     </div>
                                 )}
                             </div>
-                           
-                            <button className="add-button" onClick={() => { setShowAddForm(true); setShowEditForm(false); }}>+ Add Faqs</button>
+
+                            <button className="add-button" onClick={() => { setShowAddForm(true); }}>+ Add Faqs</button>
                         </div>
                     </div>
                     <h2 className="text-center fw-bold my-4">
                         <span className="text-primary">Frequently Asked Questions</span>
                     </h2>
 
-
                     {/* Conditional Form Rendering */}
                     <AddFaqs showForm={showAddForm} setShowForm={setShowAddForm} />
-
-                    {showEditForm && (
-                        <form className="faq-form" onSubmit={handleSubmit}>
-                            <h3>Edit Faqs..</h3>
-                            <input type="text" id="equestion" name="equestion" value={formData.equestion} onChange={handleChange} required />
-                            <textarea name="eanswer" id="eanswer" value={formData.eanswer} onChange={handleChange} required ></textarea>
-                            <div className="form-buttons">
-                                <button type="submit">Update</button>
-                                <button type="button" onClick={() => setShowEditForm(false)}>Cancel</button>
+                    <button ref={ref} type="button" className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Launch demo modal
+                    </button>
+                    <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div className="modal-dialog">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h1 className="modal-title fs-5" id="exampleModalLabel">Edit</h1>
+                                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div className="modal-body">
+                                    <form className="faq-form" >
+                                        <h3>Edit Faqs..</h3>
+                                        <input type="text" id="equestion" name="equestion" value={formData.equestion} onChange={handleChange} required />
+                                        <textarea name="eanswer" id="eanswer" value={formData.eanswer} onChange={handleChange} required ></textarea>
+                                      
+                                    </form>
+                                </div>
+                                <div className="modal-footer form-buttons">
+                                    <button onClick={handleSubmit} type="submit">Update</button>
+                                    <button ref={refClose} type="button" data-bs-dismiss="modal">Close</button>
+                                </div>
                             </div>
-                        </form>
-                    )}
+                        </div>
+                    </div>
+
 
                     {/* search */}
                     {faqs.length === 0 && (

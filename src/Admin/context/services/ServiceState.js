@@ -34,8 +34,9 @@ const ServiceState = (props) => {
         const service = await response.json();
         setservices(services.concat(service))
     }
-      //Delete Note
-      const deleteService = async (id) => {
+
+    //Delete services
+    const deleteService = async (id) => {
         //Todo :api call
         const response = await fetch(`${host}/api/services/deleteservices/${id}`, {
             method: 'DELETE',
@@ -47,9 +48,6 @@ const ServiceState = (props) => {
         console.log(json)
         const newServices = services.filter((service) => { return service._id !== id })
         setservices(newServices)
-       
-
-
     }
     //Edit Note
     const editService = async (id, title, description, img) => {
@@ -79,7 +77,7 @@ const ServiceState = (props) => {
     }
 
     return (
-        <ServiceContext.Provider value={{ services, addServices,getService,deleteService,editService }}>
+        <ServiceContext.Provider value={{ services, addServices, getService, deleteService, editService }}>
             {props.children}
         </ServiceContext.Provider>
     )
