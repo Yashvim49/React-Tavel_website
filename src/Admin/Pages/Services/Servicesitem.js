@@ -2,25 +2,31 @@ import React, { useContext } from 'react'
 import serviceContext from '../../context/services/serviceContetxt'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Swal from "sweetalert2";
+import "sweetalert2/dist/sweetalert2.min.css";
 
-const Servicesitem = (props) => {
-  const context = useContext(serviceContext);
-  const { deleteService } = context;
-  const { service, updateServices } = props;
+const Servicesitem = ({service, updateServices}) => {
+   const { deleteService } = useContext(serviceContext);
 
   const handleDelete = () => {
-    if (window.confirm("Are you sure you want to delete this Services?")) {
-      deleteService(service._id);
-      toast.success("✅ This Services deleted successfully!", {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
+        Swal.fire({
+            title: "Delete this Service?",
+            text: "This action cannot be undone!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#6c757d",
+            confirmButtonText: "Yes, delete it",
+            reverseButtons: true,
+          }).then(({ isConfirmed }) => {
+             if (isConfirmed) {
+               deleteService(service._id);
+               toast.success("✅This Service deleted successfully!", {
+                 position: "top-right",
+                 autoClose: 2500,
+          });
+        }
       });
-    }
   };
 
   return (
